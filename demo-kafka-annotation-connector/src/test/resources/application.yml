@@ -1,0 +1,11 @@
+spring:
+  kafka:
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    topic:
+      helloworld: helloworld.t
+
+logging:
+  level:
+      - ".=warn"
+      - "com.atsistemas.kafka.framework=debug"
+      - "org.springframework=warn"
