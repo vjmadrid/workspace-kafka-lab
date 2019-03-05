@@ -1,0 +1,25 @@
+debug: false
+
+spring:
+   application:
+      name: kafka-listener-receiver-connector
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9090
+    consumer:
+      group-id: example-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+app:
+  topic:
+    messages: topic-messages
+    events: topic-events
+
+logging:
+  level:
+    root: WARN
+    org.springframework.web: INFO
+    com.acme: DEBUG

@@ -13,7 +13,7 @@ Esta librería destaca por :
 * Java 8
 * [Maven 3](https://maven.apache.org/) - Gestión de dependencias
 * [Apache Kafka ](https://kafka.apache.org/) 2.11-1.1.1
- 
+* Spring Boot 
 
 Dependencias con proyectos de arquitectura
 
@@ -48,7 +48,7 @@ zookeeper-server-start.bat ..\..\config\zookeeper.properties
 kafka-server-start.bat ..\..\config\server-0.properties
 
 * Por defecto el ejemplo requiere arrancar un broker en el puerto **9090**
-* La ubicación del nodo se puede moficiar en el fichero : **application-yml**
+* La ubicación del nodo se puede moficiar en el fichero : **application.yml**
 
 * Se requiere crear los topics :
 
