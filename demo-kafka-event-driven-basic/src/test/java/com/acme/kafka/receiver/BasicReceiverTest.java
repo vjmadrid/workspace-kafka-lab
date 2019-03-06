@@ -24,6 +24,8 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.acme.architecture.event.driven.entity.GenericEvent;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext
@@ -31,15 +33,15 @@ public class BasicReceiverTest {
 
 	public static final Logger LOG = LoggerFactory.getLogger(BasicReceiverTest.class);
 
-	private static final String EXAMPLE_TOPIC = "topic-1";
+	private static final String EXAMPLE_TOPIC_EVENTS = "topic-events";
 
 	private static final int NUM_BROKERS = 1;
 
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC);
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC_EVENTS);
 
 	@Autowired
-	private BasicReceiver basicReceiver;
+	private BasicEventReceiver basicReceiver;
 
 	private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -47,6 +49,8 @@ public class BasicReceiverTest {
 	private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
 	private String messageTest;
+	
+	private GenericEvent eventTest;
 
 	private void configSenderKafkaEmbedded() throws Exception {
 		LOG.debug("*** configSenderKafkaEmbedded ***");
@@ -59,7 +63,7 @@ public class BasicReceiverTest {
 
 		LOG.debug("Create a Kafka templaete...");
 		kafkaTemplate = new KafkaTemplate<>(producerFactory);
-		kafkaTemplate.setDefaultTopic(EXAMPLE_TOPIC);
+		kafkaTemplate.setDefaultTopic(EXAMPLE_TOPIC_EVENTS);
 
 		LOG.debug("Wait until the container has the required number of assigned partitions...");
 		for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
@@ -78,7 +82,7 @@ public class BasicReceiverTest {
 	@Test
 	public void shouldReceive() throws InterruptedException {
 		kafkaTemplate.sendDefault(messageTest);
-		LOG.debug("should sent message='{}'", messageTest);
+		LOG.debug("shouldSendEvent sent message='{}'", messageTest);
 		
 		basicReceiver.getLatchTest().await(10000, TimeUnit.MILLISECONDS);
 	    // check that the message was received

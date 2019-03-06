@@ -7,13 +7,12 @@
     </encoder>
   </appender>
 
-  <logger name="com.acme.kafka.connector" level="DEBUG" />
-  <logger name="org.springframework" level="WARN" />
+  <logger name="com.acme.kafka" level="INFO" />
   
-  <!-- turn tomcat scan warnings off -->
-  <logger name="org.apache.tomcat.util.scan" level="ERROR" />
+  <logger name="org.springframework" level="WARN" />
 
-  <root level="INFO">
+  <root level="WARN">
     <appender-ref ref="STDOUT" />
   </root>
+
 </configuration>

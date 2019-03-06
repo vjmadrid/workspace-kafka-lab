@@ -31,15 +31,15 @@ public class BasicReceiverTest {
 
 	public static final Logger LOG = LoggerFactory.getLogger(BasicReceiverTest.class);
 
-	private static final String EXAMPLE_TOPIC = "topic-1";
+	private static final String EXAMPLE_TOPIC_EVENTS = "topic-events";
 
 	private static final int NUM_BROKERS = 1;
 
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC);
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC_EVENTS);
 
 	@Autowired
-	private BasicReceiver basicReceiver;
+	private BasicBatchReceiver basicReceiver;
 
 	private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -59,7 +59,7 @@ public class BasicReceiverTest {
 
 		LOG.debug("Create a Kafka templaete...");
 		kafkaTemplate = new KafkaTemplate<>(producerFactory);
-		kafkaTemplate.setDefaultTopic(EXAMPLE_TOPIC);
+		kafkaTemplate.setDefaultTopic(EXAMPLE_TOPIC_EVENTS);
 
 		LOG.debug("Wait until the container has the required number of assigned partitions...");
 		for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
@@ -78,7 +78,7 @@ public class BasicReceiverTest {
 	@Test
 	public void shouldReceive() throws InterruptedException {
 		kafkaTemplate.sendDefault(messageTest);
-		LOG.debug("should sent message='{}'", messageTest);
+		LOG.debug("shouldSendEvent sent message='{}'", messageTest);
 		
 		basicReceiver.getLatchTest().await(10000, TimeUnit.MILLISECONDS);
 	    // check that the message was received

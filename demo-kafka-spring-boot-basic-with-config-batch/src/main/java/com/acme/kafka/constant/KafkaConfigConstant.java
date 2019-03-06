@@ -7,6 +7,8 @@ public final class KafkaConfigConstant {
 	
 	public static final String RECEIVER_GROUP_ID_CONFIG = "example-group";
 	public static final String RECEIVER_AUTO_OFFSET_RESET_CONFIG = "earliest"; //Los consumidores leeran desde el comienzo del topic
-	public static final int RECEIVER_COUNTDOWNLATCH = 1;
+	public static final int RECEIVER_COUNTDOWNLATCH = 10;
+	public static final String RECEIVER_MAX_POLL_RECORDS_CONFIG = "6";
+	
 	
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertThat;
 import static org.springframework.kafka.test.hamcrest.KafkaMatchers.hasValue;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -28,28 +29,34 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.acme.architecture.event.driven.entity.GenericEvent;
+import com.acme.architecture.event.driven.enumerate.GenericEventTypeEnum;
+import com.acme.architecture.event.driven.factory.GenericEventDataFactory;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext
-public class BasicSenderTest {
+public class BasicEventSenderTest {
 
-	public static final Logger LOG = LoggerFactory.getLogger(BasicSenderTest.class);
+	public static final Logger LOG = LoggerFactory.getLogger(BasicEventSenderTest.class);
 
-	private static final String EXAMPLE_TOPIC = "topic-examples";
+	private static final String EXAMPLE_TOPIC_EVENTS = "topic-events";
 	
 	private static final int NUM_BROKERS = 1;
 	
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC);
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC_EVENTS);
 	
 	@Autowired
-	private BasicSender basicSender;
+	private BasicEventSender basicEventSender;
 
 	private KafkaMessageListenerContainer<String, String> container;
 
 	private BlockingQueue<ConsumerRecord<String, String>> records;
 
 	private String messageTest;
+	
+	private GenericEvent eventTest;
 
 	private void configReceiverKafkaEmbedded() throws Exception {
 		LOG.debug("*** configReceiverKafkaEmbedded ***");
@@ -60,7 +67,7 @@ public class BasicSenderTest {
 		DefaultKafkaConsumerFactory<String, String> consumerFactory = new DefaultKafkaConsumerFactory<String, String>(consumerProperties);
 
 		LOG.debug("Set up the container properties...");
-		ContainerProperties containerProperties = new ContainerProperties(EXAMPLE_TOPIC);
+		ContainerProperties containerProperties = new ContainerProperties(EXAMPLE_TOPIC_EVENTS);
 
 		LOG.debug("Create a Container with MessageListenerContainer -> topic...");
 		container = new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
@@ -86,6 +93,7 @@ public class BasicSenderTest {
 	@Before
 	public void init() throws Exception {
 		messageTest = "TEST";
+		eventTest = GenericEventDataFactory.create(UUID.randomUUID().toString(),"", "Send Message",GenericEventTypeEnum.CREATE.toString(), "", 0, messageTest);
 
 		configReceiverKafkaEmbedded();
 	}
@@ -97,7 +105,7 @@ public class BasicSenderTest {
 
 	@Test
 	public void shouldSend() throws InterruptedException {
-		basicSender.send(messageTest);
+		basicEventSender.send(eventTest);
 		
 	    ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
 	    // Hamcrest Matchers

@@ -35,12 +35,12 @@ public class BasicSenderTest {
 
 	public static final Logger LOG = LoggerFactory.getLogger(BasicSenderTest.class);
 
-	private static final String EXAMPLE_TOPIC = "topic-examples";
+	private static final String EXAMPLE_TOPIC_EVENTS = "topic-events";
 	
 	private static final int NUM_BROKERS = 1;
 	
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC);
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC_EVENTS);
 	
 	@Autowired
 	private BasicSender basicSender;
@@ -60,7 +60,7 @@ public class BasicSenderTest {
 		DefaultKafkaConsumerFactory<String, String> consumerFactory = new DefaultKafkaConsumerFactory<String, String>(consumerProperties);
 
 		LOG.debug("Set up the container properties...");
-		ContainerProperties containerProperties = new ContainerProperties(EXAMPLE_TOPIC);
+		ContainerProperties containerProperties = new ContainerProperties(EXAMPLE_TOPIC_EVENTS);
 
 		LOG.debug("Create a Container with MessageListenerContainer -> topic...");
 		container = new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);

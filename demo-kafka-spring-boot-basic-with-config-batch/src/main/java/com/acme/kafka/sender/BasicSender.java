@@ -22,10 +22,4 @@ public class BasicSender {
         LOG.info("[BasicSender]  sending message='{}' to topic='{}'", message, topic);
         kafkaTemplate.send(topic, message);
     }
-    
-    public void send(String topicParameter, String message) {
-    	LOG.info("[BasicSender]  sending message='{}' to topic parameter='{}'", message, topicParameter);
-        kafkaTemplate.send(topicParameter, message);
-    }
-    
 }

@@ -44,8 +44,16 @@ public class BasicSenderReceiverTest {
 	}
 
 	@Test
-	public void shouldSendMessage() throws InterruptedException {
+	public void shouldSend() throws InterruptedException {
 		basicSender.send(messageTest);
+		
+		basicReceiver.getLatchTest().await(10000, TimeUnit.MILLISECONDS);
+	    assertThat(basicReceiver.getLatchTest().getCount()).isEqualTo(0);
+	}
+	
+	@Test
+	public void shouldSendWithTopic() throws InterruptedException {
+		basicSender.send(EXAMPLE_TOPIC,messageTest);
 		
 		basicReceiver.getLatchTest().await(10000, TimeUnit.MILLISECONDS);
 	    assertThat(basicReceiver.getLatchTest().getCount()).isEqualTo(0);

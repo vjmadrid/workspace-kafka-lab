@@ -10,12 +10,13 @@ import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import com.acme.architecture.event.driven.entity.GenericEvent;
 import com.acme.kafka.constant.KafkaConfigConstant;
 
 @Service
-public class BasicReceiver {
+public class BasicEventReceiver {
 
-	private static final Logger LOG = LoggerFactory.getLogger(BasicReceiver.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BasicEventReceiver.class);
 
 	private CountDownLatch latchTest = new CountDownLatch(KafkaConfigConstant.RECEIVER_COUNTDOWNLATCH);
 
@@ -23,23 +24,24 @@ public class BasicReceiver {
 		// Indicador que el mensaje es recibido en las test
 		return latchTest;
 	}
-
+	
 	private void showMessageHeaders(MessageHeaders headers) {
 		if (headers != null) {
 			headers.keySet().forEach(key -> LOG.info("{}: {}", key, headers.get(key)));
 		}
 	}
 
-	@KafkaListener(id = "basic-listener", topics = "${app.topic.example1}")
-	public void receive(@Payload String message, @Headers MessageHeaders headers) {
-		LOG.info("[BasicReceiver] received message='{}'", message);
-
-		// Mostrar detalles de la recepción [Opcional]
-		LOG.info("[BasicReceiver] details...");
-		showMessageHeaders(headers);
+	@KafkaListener(id = "event-listener", topics = "${app.topic.example1}")
+	public void receive(@Payload GenericEvent event, @Headers MessageHeaders headers) {
+		LOG.info("[BasicEventReceiver] received event='{}'", event.toString());
+		LOG.info("[BasicEventReceiver] id='{}'", event.getId());
 		
-		// No Usar en Prod -> Avisa de que el mensaje se ha recibido
-		LOG.info("[BasicReceiver] latch.countDown()...");
+		// Mostrar detalles de la recepción
+		LOG.info("[BasicEventReceiver] details...");
+		showMessageHeaders(headers);
+
+		// No use in production environment
+		LOG.info("[BasicEventReceiver] latch.countDown()...");
 		latchTest.countDown();
 	}
 

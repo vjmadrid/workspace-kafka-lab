@@ -111,6 +111,12 @@ Ejemplo de respuesta
 }
 
 
+Swagger 
+
+http://localhost:8081/kafka-connector/v2/api-docs
+
+http://localhost:8081/kafka-connector/swagger-ui.html
+
 
 ## Despliegue
 
