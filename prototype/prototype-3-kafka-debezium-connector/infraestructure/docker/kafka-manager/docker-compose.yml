@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  kafka-manager:
+    build: ./kafka-manager/.
+    container_name: kafka-manager
+    ports:
+      - "9000:9000"
+    environment:
+      - "ZK_HOSTS=zookeeper:2181" 
+networks:
+  default:
+    external:
+      name: debezium_net      

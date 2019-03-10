@@ -1,0 +1,25 @@
+debug: false
+
+spring:
+   application:
+      name: kafka-rest-register-connector
+
+server:
+   servlet:
+      contextPath: /kafka-register
+   port: 8082   
+ 
+logging:
+  file: logs/app.log
+  
+kafka:
+  bootstrap-servers: localhost:9092 
+  connector:
+    url: http://localhost:8083/connectors/
+    name: inventory-connector
+    config-file: inventory-connector.properties 
+    listener:
+         topic: dbserver1.inventory.customers
+
+management.endpoints.web.exposure.include: "*"
+  

@@ -1,0 +1,54 @@
+version: '3.4'
+services:
+  zookeeper:
+    image: debezium/zookeeper:0.5
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    networks:
+      - net
+  kafka:
+    #image: debezium/kafka:0.5
+    build: ./kafka/.
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      #- "7072:7072" # jmx-exporter
+      #- "9999:9999" # kafka-manager
+    environment:
+      - "ZOOKEEPER_CONNECT=zookeeper:2181"
+    networks:
+      - net
+  mysql:
+    image: debezium/example-mysql:0.5
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=debezium"
+      - "MYSQL_USER=mysqluser"
+      - "MYSQL_PASSWORD=mysqlpw"
+    networks:
+      - net
+  kafka-connect:
+    image: debezium/connect:0.5
+    container_name: kafka-connect
+    depends_on:
+      - kafka
+      - mysql
+    ports:
+      - "8083:8083"
+    environment:
+      - "GROUP_ID=1"
+      - "CONFIG_STORAGE_TOPIC=my_connect_configs"
+      - "OFFSET_STORAGE_TOPIC=my_connect_offsets"
+      - "BOOTSTRAP_SERVERS=kafka:9092"
+    networks:
+      - net
+networks:
+  net:
+    driver: bridge      
