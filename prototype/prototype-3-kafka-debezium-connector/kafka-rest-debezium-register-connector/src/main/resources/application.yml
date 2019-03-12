@@ -1,8 +1,12 @@
 debug: false
 
 spring:
-   application:
-      name: kafka-rest-register-connector
+  application:
+    name: kafka-rest-debezium-register-connector
+  kafka:
+    consumer:
+      group-id: debezium
+      auto-offset-reset: earliest
 
 server:
    servlet:

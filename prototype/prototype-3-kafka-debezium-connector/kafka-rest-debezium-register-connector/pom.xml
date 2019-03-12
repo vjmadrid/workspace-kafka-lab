@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.acme.kafka.connector.debezium</groupId>
-	<artifactId>kafka-rest-debeizum-register-connector</artifactId>
+	<artifactId>kafka-rest-debezium-register-connector</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>kafka-rest-debeizum-register-connector</name>
+	<name>kafka-rest-debezium-register-connector</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
