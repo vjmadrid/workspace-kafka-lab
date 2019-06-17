@@ -1,14 +1,15 @@
-# architecture-kafka-common
+# architecture-kafka-sender
 
-This project represents a **architecture library (dependency)** related with **elements common to any project** that use **Apache Kafka** to develop the different parts in a homogeneous way
+This project represents a **architecture library (dependency)** related with **elements common to a sender/producer** that use **Apache Kafka** to develop the different parts in a homogeneous way
 
 This library stands out for:
 
-* Provides  **global contant classes**
+* Provides **constants classes**
+* Provides  **different configurations elements**
 * Provides **utility classes** to facilitaty testing with certain elements : converters, callback, transformers, etc.
-* Provides a **generic exception** "AcmeKafkaException" (Kafka Main Business Exception) to have a differentiating type of exception in the project (the rest of exceptions should inherit from it)
-* Provides  an **serialize/deserialize components**
-* Define **kafka utiltity common frameworks** and their versioning (Help to define an architecture)
+* Provides  a proposal of **generic producer**
+* Provides  a proposal of **generic sender service** (sync and async)
+
 
 ## Technological Stack
 
@@ -19,14 +20,11 @@ This library stands out for:
 Dependencies with architecture projects
 
 * **architecture-kafka-testing** [1.0.0-SNAPSHOT] : Architecture library for testing used in the test environment
-* **architecture-common** [1.0.0-SNAPSHOT] : Architecture library to provide global elements to projects
+* **architecture-kafka-common** [1.0.0-SNAPSHOT] : Architecture library to provide global elements to projects with Kafka
 
 Dependencies with architecture projects
 
-* **spring-context** [5.0.4.RELEASE] : Spring Framework
-* **spring-kafka** [2.1.4.RELEASE] : Use Kafka with Spring Framework
-* **kafka-clients** [1.10.19] : Implementación de log4j
-
+N/A
 
 ## Prerequisites
 

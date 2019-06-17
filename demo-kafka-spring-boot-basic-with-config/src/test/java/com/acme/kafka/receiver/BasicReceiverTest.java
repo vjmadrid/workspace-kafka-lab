@@ -57,7 +57,7 @@ public class BasicReceiverTest {
 		ProducerFactory<String, String> producerFactory = new DefaultKafkaProducerFactory<String, String>(
 				senderProperties);
 
-		LOG.debug("Create a Kafka templaete...");
+		LOG.debug("Create a Kafka template...");
 		kafkaTemplate = new KafkaTemplate<>(producerFactory);
 		kafkaTemplate.setDefaultTopic(EXAMPLE_TOPIC);
 

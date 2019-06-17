@@ -9,7 +9,7 @@ public class CustomCallback implements Callback {
 	
 	public static final Logger LOG = LoggerFactory.getLogger(CustomCallback.class);
 	
-	private final static String FORMAT_SENT_MESSAGE = "[Callback] Sent record(key={} value=[{}]) to topic= {} with  meta(partition= {}, offset= {}) time= {}\n";
+	private final static String FORMAT_SENT_MESSAGE = "[CustomCallback] Sent record(key={} value=[{}]) to topic= {} with  meta(partition= {}, offset= {}) time= {}\n";
 	
 	private final long startTime;
 	

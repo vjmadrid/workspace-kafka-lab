@@ -1,96 +1,83 @@
 # demo-kafka-spring-boot-basic-with-config
 
-Este proyecto representa un ejemplo básico para trabajar con **Kafka** y clases de configuración específica para el sender y el receiver
+This project represents a  example of working with **Kafka** + configuration classes and event-driven context
 
-Esta librería destaca por :
+Send and receive GenericEvent
 
-* Proporcionar **clases de proyecto** : receiver y sender
-* Proporcionar **clases de configuración** para receiver y sender
+This projects stands out for:
 
-## Stack Tecnológico
+* Provides **projets class** : receiver and sender
+* Provides **configuration classes** : receiver and sender
+
+## Technological Stack
 
 * Java 8
-* [Maven 3](https://maven.apache.org/) - Gestión de dependencias
+* [Maven 3](https://maven.apache.org/) - Dependency Management
 * [Apache Kafka ](https://kafka.apache.org/) 2.11-1.1.1
-* Spring Boot
+* [Spring Boot](https://spring.io/projects/spring-boot) 2.0.0.RELEASE
+* [Spring](https://spring.io)
  
 
-Dependencias con proyectos de arquitectura
+Dependencies with architecture projects
 
-No aplica 
+* **architecture-event-driven** [1.0.0-SNAPSHOT] : Architecture library for event-driven
 
-Dependencias terceros
+Third Party Dependencies
 
-* **spring-boot-starter** [2.0.0.RELEASE] : Framework Spring Boot
-* **spring-kafka** [2.1.4.RELEASE] : Librería de integración Spring y Kafka
-* **spring-boot-starter-test** [2.0.0.RELEASE] : Librería de testing para Spring Boot
-* **spring-kafka-test** [2.0.0.RELEASE] : Librería de testing para Spring Boot
+* **spring-boot-starter** [2.0.0.RELEASE] : Spring Boot + Spring Framework 
+* **spring-kafka** [2.1.4.RELEASE] : Spring - Kafka Integration
+* **spring-boot-starter-test** [2.0.0.RELEASE] : Spring Boot testing library
+* **spring-kafka-test** [2.0.0.RELEASE] : Kafka testing library with Spring Framework
 
+## Prerequisites
 
-## Prerrequisitos
+Define what elements are needed to install the software
 
-Se definen que elementos se necesitan para instalar el software
+* Java 8 installed (1.5+ version required)
+* Maven installed  (3+)
+* Kafka infraestructure + Topics
 
-* Tener instalado Java 8 (Se requiere versión 1.5+)
-* Tener instalado Maven (Se aconseja que sea 3+)
-* Tener instalado / configurado Apache Kafka
-* Creación de los topicos necesarios
+## Apache Kafka Configuration
 
+* Installation and Configuration : Apache Kafka (Document **doc/README-installation-configuration-kafka**)
 
-### Configuración Apache Kafka
+* Create topics :
 
-* Se requiere arrancar Zookeeper
-
-zookeeper-server-start.bat ..\..\config\zookeeper.properties
-
-* Se requiere arrancar un Broker
-
-kafka-server-start.bat ..\..\config\server-0.properties
-
-* Por defecto el ejemplo requiere arrancar un broker en el puerto **9090**
-* La ubicación del nodo se puede moficiar en el fichero : **application-yml**
-
-* Se requiere crear los topics :
-
+```bash
 kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-1
 
 kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-2
+```
 
+## Installation
 
+Steps to follow
 
-## Instalación
+* Start a terminal
+* To be located in the PATH of installation (the place where the project is located)
+* Verify that the file "pom.xml" is available
 
-Pasos a seguir 
-
-* Arrancar la consola
-* Situarse en el PATH de instalación (el lugar donde se encuentra el proyecto)
-* Verificar que se encuentra disponible el fichero "pom.xml"
-
-Ejecutar el siguiente comando
+Execute the following command
 
 ```bash
 mvn clean install
 ```
 
-El resultado será la generación de un artefacto en tu repositorio maven
-
+The result will be the generation of an artifact in your maven repository
 
 ## Testing
 
-Este proyecto dispone de test
+This project has tests
 
-Nota : utilizar todos los comandos de maven
+## Deploy
 
-## Despliegue
+N/A
 
-No aplica
+## Versioning
 
+**Note :** [SemVer](http://semver.org/) is used for the versioning. 
+To see the available versions access the repository tags
 
-## Versionado
-
-**Nota :** Se utiliza [SemVer](http://semver.org/) para el versionado. 
-Para ver las versiones disponibles acceder a los tags del repositorio
-
-## Autores
+## Authors
 
 * **Víctor Madrid**

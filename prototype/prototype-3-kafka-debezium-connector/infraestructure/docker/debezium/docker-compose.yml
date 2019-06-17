@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   zookeeper:
-    image: debezium/zookeeper:0.5
+    image: debezium/zookeeper:0.9
     container_name: zookeeper
     ports:
       - "2181:2181"
@@ -10,8 +10,8 @@ services:
     networks:
       - net
   kafka:
-    #image: debezium/kafka:0.5
-    build: ./kafka/.
+    image: debezium/kafka:0.9
+    #build: ./kafka/.
     container_name: kafka
     depends_on:
       - zookeeper
@@ -24,7 +24,7 @@ services:
     networks:
       - net
   mysql:
-    image: debezium/example-mysql:0.5
+    image: debezium/example-mysql:0.9
     container_name: mysql
     ports:
       - "3306:3306"
@@ -35,9 +35,10 @@ services:
     networks:
       - net
   kafka-connect:
-    image: debezium/connect:0.5
+    image: debezium/connect:0.9
     container_name: kafka-connect
     depends_on:
+      - zookeeper
       - kafka
       - mysql
     ports:
@@ -46,7 +47,7 @@ services:
       - "GROUP_ID=1"
       - "CONFIG_STORAGE_TOPIC=my_connect_configs"
       - "OFFSET_STORAGE_TOPIC=my_connect_offsets"
-      - "BOOTSTRAP_SERVERS=kafka:9092"
+      - "STATUS_STORAGE_TOPIC=my_connect_statuses"
     networks:
       - net
 networks:

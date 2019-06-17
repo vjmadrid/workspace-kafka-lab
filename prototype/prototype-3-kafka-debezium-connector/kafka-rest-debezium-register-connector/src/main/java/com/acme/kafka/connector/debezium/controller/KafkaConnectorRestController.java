@@ -1,6 +1,7 @@
 package com.acme.kafka.connector.debezium.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,20 +47,14 @@ public class KafkaConnectorRestController {
 		LOG.info("[KafkaConnectorRestController] is Alived ...");
 	}
 	
-	@RequestMapping(value="/register-default-file", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
-	@ApiOperation(value="Register the Kafka Connector for mysql with file")
-	public String getRegisterDefaultFile(HttpServletResponse res) throws JsonProcessingException {
-		LOG.info("[KafkaConnectorRestController] Register Custom Connector : {}", customFileKafkaConnector.getName());
+	private String registerWithKafkaConnect(String jsonData)  throws JsonProcessingException  {
+		LOG.info("[KafkaConnectorRestController] Register with Kafka Connect: {}: {}",kafkaConnectorURL,jsonData);
 		
 		String jsonResult = null;
 		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		
-		String jsonData = KafkaConnectorConverter.INSTANCE.fromKafkaConnectorToJSON(customFileKafkaConnector, false); 
-		
-		LOG.info("[KafkaConnectorRestController] POST request: {}: {}",kafkaConnectorURL,jsonData);
 		
 		HttpEntity<String> entity = new HttpEntity<String>(jsonData,headers);
 		ResponseEntity<String> response = null;
@@ -70,6 +67,31 @@ public class KafkaConnectorRestController {
 			jsonResult = "Error: "+ex.getMessage()+". Connector already registered?";
 		}
 		return jsonResult;
+	}
+	
+	@PostMapping("/register")
+	@ApiOperation(value="Register the Kafka Connector for mysql with POST Request")
+	public String registerPostRequest(@Valid @RequestBody String jsonDataBody) throws JsonProcessingException {
+		LOG.info("[KafkaConnectorRestController] Register Connector with POST Request : {}", jsonDataBody);
+		
+		if ((jsonDataBody != null) && (!"".contentEquals(jsonDataBody))) {
+			return registerWithKafkaConnect(jsonDataBody);
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value="/register-default-file", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
+	@ApiOperation(value="Register the Kafka Connector for mysql with file")
+	public String registerDefaultFile(HttpServletResponse res) throws JsonProcessingException{
+		LOG.info("[KafkaConnectorRestController] Register Connector With File : {}", customFileKafkaConnector.getName());
+		String jsonDataFile = KafkaConnectorConverter.INSTANCE.fromKafkaConnectorToJSON(customFileKafkaConnector, false); 
+		
+		if ((jsonDataFile != null) && (!"".contentEquals(jsonDataFile))) {
+			return registerWithKafkaConnect(jsonDataFile);
+		}
+
+		return null;
     }
 	
 	

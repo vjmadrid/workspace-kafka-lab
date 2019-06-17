@@ -5,8 +5,6 @@ import java.util.Map;
 import org.apache.kafka.clients.producer.Partitioner;
 import org.apache.kafka.common.Cluster;
 
-import com.acme.architecture.common.constant.GlobalKafkaConstant;
-
 public class CustomPartitioner implements Partitioner{
 
 	@Override

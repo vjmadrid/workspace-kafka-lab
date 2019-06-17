@@ -21,9 +21,7 @@ kafka:
   connector:
     url: http://localhost:8083/connectors/
     name: inventory-connector
-    config-file: inventory-connector.properties 
-    listener:
-         topic: dbserver1.inventory.customers
+    config-file: inventory-connector.properties
 
 management.endpoints.web.exposure.include: "*"
   

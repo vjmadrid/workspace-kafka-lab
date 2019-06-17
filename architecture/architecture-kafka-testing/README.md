@@ -1,69 +1,65 @@
 # architecture-kafka-testing
 
-Este proyecto representa a una **librería de arquitectura** relacionada con **testing** sobre **Kafka** para desarrollar las diferentes partes de forma homogenea
+This project represents a **architecture library (dependency)** related with **testing** about **Apache Kafka** to develop the different parts in a homogeneus way
 
-Esta librería destaca por :
+This library stands out for:
 
-* Proporciona **clases de utilidades** para facilitar las pruebas con ciertos elementos : excepciones, clases con constantes, etc. 
-* Definir los **frameworks de testing** para Kafka y su versionado
+* Provides **utility classes** to facilitaty testing with certain elements : exceptions, constant classes, etc. 
+* Define **testing framework** and their versioning
 
-
-## Stack Tecnológico
+## Technological Stack
 
 * Java 8
-* [Maven 3](https://maven.apache.org/) - Gestión de dependencias
+* [Maven 3](https://maven.apache.org/) - Dependency Management
 * [Apache Kafka ](https://kafka.apache.org/) 2.11-1.1.1
 
 
-Dependencias con proyectos de arquitectura
+Dependencies with architecture projects
 
-* **architecture-testing** [1.0.0-SNAPSHOT] : Librería de arquitectura para testing utilizada en el ámbito de test
+* **architecture-testing** [1.0.0-SNAPSHOT] : Architecture library for testing used in the test environment
 
-Dependencias terceros
+Third Party Dependencies
  
-* **spring-kafka-test** [2.0.0.RELEASE] : Librería de testing para Spring Boot
+* **spring-kafka-test** [2.0.0.RELEASE] : Spring Kafka tesing library
 
 
-## Prerrequisitos
+## Prerequisites
 
-Se definen que elementos se necesitan para instalar el software
+Define what elements are needed to install the software
 
-* Tener instalado Java 8 (Se requiere versión 1.5+)
-* Tener instalado Maven (Se aconseja que sea 3+)
+* Java 8 installed (1.5+ version required)
+* Maven installed  (3+)
 
 
-### Instalación
+### Installation
 
-Pasos a seguir 
+Steps to follow 
 
-* Arrancar la consola
-* Situarse en el PATH de instalación (el lugar donde se encuentra el proyecto)
-* Verificar que se encuentra disponible el fichero "pom.xml"
+* Start a terminal
+* To be located in the PATH of installation (the place where the project is located)
+* Verify that the file "pom.xml" is available
 
-Ejecutar el siguiente comando
+Execute the following command
 
 ```bash
 mvn clean install
 ```
 
-El resultado será la generación de un artefacto en tu repositorio maven
-
+The result will be the generation of an artifact in your maven repository
 
 ## Testing
 
-Este proyecto NO dispone de test
+No use test
 
+## Deploy
 
-## Despliegue
+Custom Library
 
-No aplica
+## Versioning
 
+**Note :** [SemVer](http://semver.org/) is used for the versioning. 
+To see the available versions access the repository tags
 
-## Versionado
-
-**Nota :** Se utiliza [SemVer](http://semver.org/) para el versionado. 
-Para ver las versiones disponibles acceder a los tags del repositorio
-
-## Autores
+## Authors
 
 * **Víctor Madrid**
