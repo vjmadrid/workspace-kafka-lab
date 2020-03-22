@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.acme.architecture.kafka.common</groupId>
-	<artifactId>architecture-kafka-common</artifactId>
+	<groupId>com.acme.architecture.kafka.core</groupId>
+	<artifactId>architecture-kafka-spring-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>architecture-kafka-common</name>
+	<name>architecture-kafka-spring-core</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -18,8 +18,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Dependency Versions -->
-		<kafka-clients.version>2.4.1</kafka-clients.version>	
-
+		<spring-kafka.version>2.4.4.RELEASE</spring-kafka.version>
+		<spring.version>5.0.4.RELEASE</spring.version>	
+		<spring-kafka.version>2.1.4.RELEASE</spring-kafka.version>
+		
 		<!-- Plugins -->
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -39,26 +41,32 @@
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.acme.architecture.common</groupId>
-			<artifactId>architecture-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		
+	
 		<!-- *** Third Party Libraries *** -->
-		
-		<!-- kafka-clients : Client for use Apache Kafka  -->
 		<dependency>
-		    <groupId>org.apache.kafka</groupId>
-		    <artifactId>kafka-clients</artifactId>
-		    <version>${kafka-clients.version}</version>
-		</dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+			<version>${spring-kafka.version}</version>
+        </dependency>
 
+		<!-- 
+		<dependency>
+  			<groupId>org.springframework</groupId>
+  			<artifactId>spring-context</artifactId>
+  			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.kafka</groupId>
+		    <artifactId>spring-kafka</artifactId>
+		    <version>${spring-kafka.version}</version>
+		</dependency>
+		 -->
+			
 	</dependencies>
 
 	<build>
-		<finalName>architecture-kafka-common</finalName>
+		<finalName>architecture-kafka-core-spring</finalName>
 		<plugins>
 
 			<!-- maven-compiler-plugin : Plugin used to compile the project source -->

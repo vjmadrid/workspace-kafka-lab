@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.acme.architecture.common.deserializer.CustomDeserializer;
-import com.acme.architecture.common.serializer.CustomSerializer;
+import com.acme.architecture.kafka.common.deserializer.CustomDeserializer;
+import com.acme.architecture.kafka.common.serializer.CustomSerializer;
 
 public class CustomDeserializerTest {
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.acme.architecture.common.serializer.CustomSerializer;
+import com.acme.architecture.kafka.common.serializer.CustomSerializer;
 
 public class CustomSerializerTest {
 
