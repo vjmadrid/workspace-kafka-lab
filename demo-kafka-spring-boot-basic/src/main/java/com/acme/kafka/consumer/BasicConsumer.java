@@ -1,4 +1,4 @@
-package com.acme.kafka.receiver;
+package com.acme.kafka.consumer;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -11,9 +11,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BasicReceiver {
+public class BasicConsumer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BasicReceiver.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BasicConsumer.class);
 
     private CountDownLatch latch = new CountDownLatch(1);
 
@@ -25,16 +25,16 @@ public class BasicReceiver {
     // @KafkaListener : Crea un @KafkaListener
     @KafkaListener(topics = "${app.topic.example1}")
     public void receive(@Payload String message, @Headers MessageHeaders headers) {
-        LOG.info("[BasicReceiver] received message='{}'", message);
+        LOG.info("[BasicConsumer] received message='{}'", message);
         
         // Mostrar detalles de la recepción
-        LOG.info("[BasicReceiver] details...");
+        LOG.info("[BasicConsumer] details...");
         headers.keySet().forEach(key -> 
         	LOG.info("{}: {}", key, headers.get(key))
         );
         
         //No Usar en Prod
-        LOG.info("[BasicReceiver] latch.countDown()...");
+        LOG.info("[BasicConsumer] latch.countDown()...");
         latch.countDown();
     }
 

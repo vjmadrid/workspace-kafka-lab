@@ -7,13 +7,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.acme.kafka.sender.BasicSender;
+import com.acme.kafka.producer.BasicProducer;
 
 @SpringBootApplication
 public class SpringKafkaApplication implements CommandLineRunner {
 
     @Autowired
-    private BasicSender basicSender;
+    private BasicProducer basicSender;
 	
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaApplication.class, args);
@@ -21,6 +21,6 @@ public class SpringKafkaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-    	basicSender.send("Hello World! "+new Date());
+    	//basicSender.send("Hello World! "+new Date());
     }
 }

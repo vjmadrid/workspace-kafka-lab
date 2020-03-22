@@ -1,4 +1,4 @@
-package com.acme.kafka.sender;
+package com.acme.kafka.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +8,9 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BasicSender {
+public class BasicProducer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BasicSender.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BasicProducer.class);
 
     @Value("${app.topic.example1}")
     private String topic;
@@ -19,7 +19,7 @@ public class BasicSender {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public void send(String message){
-        LOG.info("[BasicSender]  sending message='{}' to topic='{}'", message, topic);
+        LOG.info("[BasicProducer] sending message='{}' to topic='{}'", message, topic);
         kafkaTemplate.send(topic, message);
     }
 }
