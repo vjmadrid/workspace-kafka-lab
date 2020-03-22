@@ -6,7 +6,7 @@
     </encoder>
   </appender>
 
-  <logger name="com.acme.kafka.basic" level="INFO" />
+  <logger name="com.acme.architecture.kafka.core" level="INFO" />
   <logger name="org.springframework" level="WARN" />
   
   <logger name="org.apache.kafka" level="INFO"/>

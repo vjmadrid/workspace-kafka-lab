@@ -19,8 +19,6 @@
 
 		<!-- Dependency Versions -->
 		<spring-kafka.version>2.4.4.RELEASE</spring-kafka.version>
-		<spring.version>5.0.4.RELEASE</spring.version>	
-		<spring-kafka.version>2.1.4.RELEASE</spring-kafka.version>
 		
 		<!-- Plugins -->
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -43,25 +41,20 @@
 		</dependency>
 	
 		<!-- *** Third Party Libraries *** -->
-		<dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
-			<version>${spring-kafka.version}</version>
-        </dependency>
-
-		<!-- 
-		<dependency>
-  			<groupId>org.springframework</groupId>
-  			<artifactId>spring-context</artifactId>
-  			<version>${spring.version}</version>
-		</dependency>
 		
+		<!-- spring-kafka : Spring Kafka Support -->
 		<dependency>
 		    <groupId>org.springframework.kafka</groupId>
 		    <artifactId>spring-kafka</artifactId>
 		    <version>${spring-kafka.version}</version>
 		</dependency>
-		 -->
+		
+		<!-- spring-kafka-test : Spring Kafka Test Support -->
+		<dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+			<version>${spring-kafka.version}</version>
+        </dependency>
 			
 	</dependencies>
 

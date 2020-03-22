@@ -12,6 +12,9 @@ This library stands out for:
 
 
 
+
+
+
 ## Technological Stack
 
 * Java 8
@@ -38,6 +41,7 @@ Define what elements are needed to install the software
 * Java 8 installed (1.5+ version required)
 * Maven installed  (3+)
 * Kafka infraestructure
+
 
 
 

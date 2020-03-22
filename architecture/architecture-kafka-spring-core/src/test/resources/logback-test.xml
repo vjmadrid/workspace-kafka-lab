@@ -6,7 +6,7 @@
     </encoder>
   </appender>
 
-  <logger name="com.acme.kafka" level="INFO" />
+  <logger name="com.acme.architecture.kafka.core" level="INFO" />
 
   <root level="INFO">
     <appender-ref ref="STDOUT" />

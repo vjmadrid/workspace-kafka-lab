@@ -8,33 +8,50 @@
     <groupId>com.acme.kafka</groupId>
     <artifactId>demo-kafka-spring-boot-basic</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
+	<name>demo-kafka-spring-boot-basic</name>
+	<description></description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.RELEASE</version>
-    </parent>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<!-- *** Important : Aling with dae-architecture-core and other architecture 
+			libraries -->
+		<version>2.2.0.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 
-    <properties>
-        <!-- *** Important : Include properties in ~/.m2/settings.xml -->
+	<properties>
+		<!-- *** Important : Include properties in ~/.m2/settings.xml -->
 
 		<!-- Compiler & Resources -->
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-        <!-- Dependency Versions -->
-        <spring-kafka.version>2.1.4.RELEASE</spring-kafka.version>
-        
-        <!-- Plugins -->
-    </properties>
 
-    <!-- <profiles> They are found definitively in in ~/.m2/settings.xml -->
+		<!-- Spring Boot Properties -->
+		<start-class>com.acme.kafka.XXXApplication</start-class>
+
+		<!-- Dependency Versions -->
+		<spring-kafka.version>2.4.4.RELEASE</spring-kafka.version>
+
+		<!-- Testing -->
+		<!-- * Default value -> use profile -->
+		<!-- 
+		<skip.unit.tests>false</skip.unit.tests>
+		-->
+    	
+		<!-- Plugins -->
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+
+	</properties>
 
 
-    <dependencies>
-	
-        <!-- *** Architecture Libraries *** -->
+	<!-- <profiles> They are found definitively in in ~/.m2/settings.xml -->
+
+	<dependencies>
+
+		<!-- *** Architecture libraries *** -->
 
         <!-- *** Third Party Libraries *** -->
 
@@ -48,8 +65,6 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-        <!-- testing -->
-        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -62,33 +77,22 @@
             <scope>test</scope>
         </dependency>
 
-    </dependencies>
+	</dependencies>
 
-    <build>
-        <finalName>demo-kafka-spring-boot-basic</finalName>
+	<build>
+		<finalName>demo-kafka-spring-boot-basic</finalName>
 
         <plugins>
 
-            <!-- maven-compiler-plugin : Plugin used to compile the project source -->
+            <!-- spring-boot-maven-plugin : Plugin used to work with Spring Boot application -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- maven-resources-plugin : Plugin used to handle the project resources -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven-resources-plugin.version}</version>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-			
 			<!-- maven-surefire-plugin : Plugin used to run unit tests - Generate reports in the directory target/surefire-reports -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<skipTests>${skip.unit.tests}</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
@@ -156,7 +160,7 @@
 				</executions>
 			</plugin>
 
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 
 </project>

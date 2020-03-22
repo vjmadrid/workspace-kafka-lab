@@ -7,24 +7,54 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.acme.kafka</groupId>
     <artifactId>demo-kafka-spring-boot-basic-with-config-batch</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.RELEASE</version>
-    </parent>
+	<name>demo-kafka-spring-boot-basic-with-config-batch</name>
+	<description></description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<!-- *** Important : Aling with dae-architecture-core and other architecture 
+			libraries -->
+		<version>2.2.0.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 
     <properties>
+    	<!-- *** Important : Include properties in ~/.m2/settings.xml -->
+
+		<!-- Compiler & Resources -->
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-        <spring-kafka.version>2.1.4.RELEASE</spring-kafka.version>
-        
+
+        <!-- Spring Boot Properties -->
+		<start-class>com.acme.kafka.XXXApplication</start-class>
+
+		<!-- Dependency Versions -->
+		<spring-kafka.version>2.4.4.RELEASE</spring-kafka.version>
+
+        <!-- Testing -->
+		<!-- * Default value -> use profile -->
+		<!-- 
+		<skip.unit.tests>false</skip.unit.tests>
+		-->
+    	
+		<!-- Plugins -->
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+
     </properties>
 
+
+	<!-- <profiles> They are found definitively in in ~/.m2/settings.xml -->
+
     <dependencies>
-	
+
+		<!-- *** Architecture libraries *** -->
+
+        <!-- *** Third Party Libraries *** -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -35,8 +65,6 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-        <!-- testing -->
-        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -52,11 +80,86 @@
     </dependencies>
 
     <build>
+        <finalName>demo-kafka-spring-boot-basic-with-config-batch</finalName>
+
         <plugins>
+
+            <!-- spring-boot-maven-plugin : Plugin used to work with Spring Boot application -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- maven-surefire-plugin : Plugin used to run unit tests - Generate reports in the directory target/surefire-reports -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>${skip.unit.tests}</skipTests>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+
+			<!-- jacoco-maven-plugin : Plugin used to generate code coverage -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>coverage-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>coverage-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/jacoco-reports</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>coverage-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>80%</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- maven-deploy-plugin : Plugin used during the deploy phase (use with artifact repository) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
         </plugins>
     </build>
 
