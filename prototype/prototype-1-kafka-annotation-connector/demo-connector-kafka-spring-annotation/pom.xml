@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme.kafka.demo</groupId>
+	<artifactId>demo-connector-kafka-spring-annotation</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+	<name>demo-connector-kafka-spring-annotation</name>
+	<description></description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.0.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+    <properties>
+		<!-- *** Important : Include properties in ~/.m2/settings.xml -->
+
+		<!-- Compiler & Resources -->
+    	<java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Spring Boot Properties -->
+		<start-class>com.acme.kafka.demo.Application</start-class>
+
+        <!-- Dependency Versions -->
+		<spring.version>5.2.0.RELEASE</spring.version>
+
+		<!-- Testing -->
+		<!-- * Default value -> use profile -->
+		<!-- 
+		<skip.unit.tests>false</skip.unit.tests>
+		-->
+
+		<!-- Plugins -->
+
+		<!-- Plugins -->
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+	</properties>
+
+
+	<!-- <profiles> They are found definitively in in ~/.m2/settings.xml -->
+
+    <dependencies>
+
+		<!-- *** Architecture Libraries *** -->
+
+		<dependency>
+			<groupId>com.acme.connector.kafka.spring.annotation</groupId>
+			<artifactId>connector-kafka-spring-annotation</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- *** Third Party Libraries *** -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>demo-connector-kafka-spring-annotation</finalName>
+
+		<plugins>
+
+			<!-- spring-boot-maven-plugin : Plugin used to work with Spring Boot application -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- maven-surefire-plugin : Plugin used to run unit tests - Generate 
+				reports in the directory target/surefire-reports -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+
+					<includes>
+						<include>**/Test*.java</include>
+						<include>**/*Test.java</include>
+						<include>**/*Tests.java</include>
+						<include>**/*TestCase.java</include>
+					</includes>
+
+					<skipTests>${skip.unit.tests}</skipTests>
+					<testFailureIgnore>false</testFailureIgnore>
+
+					<properties>
+						<configurationParameters>
+							junit.jupiter.execution.parallel.enabled=true
+							junit.jupiter.execution.parallel.config.dynamic.factor=2
+							junit.platform.output.capture.stdout=true
+							junit.platform.output.capture.stderr=true
+						</configurationParameters>
+					</properties>
+
+				</configuration>
+			</plugin>
+
+			<!-- jacoco-maven-plugin : Plugin used to generate code coverage -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>coverage-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>coverage-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/jacoco-reports</outputDirectory>
+						</configuration>
+					</execution>
+					<!--
+					<execution>
+						<id>coverage-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>80%</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+					-->
+				</executions>
+			</plugin>
+
+			<!-- maven-deploy-plugin : Plugin used during the deploy phase (use with 
+				artifact repository) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

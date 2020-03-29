@@ -1,14 +1,11 @@
-package com.acme.kafka.producer;
+package com.acme.connector.kafka.spring.rest.producer.service;
+
+import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import static org.springframework.kafka.test.assertj.KafkaConditions.key;
-import static org.springframework.kafka.test.hamcrest.KafkaMatchers.hasValue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThat;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.After;
@@ -30,24 +27,22 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.acme.kafka.producer.BasicProducer;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext
-public class BasicProducerTest {
+public class MessageServiceTest {
 
-	public static final Logger LOG = LoggerFactory.getLogger(BasicProducerTest.class);
+	public static final Logger LOG = LoggerFactory.getLogger(MessageServiceTest.class);
 
 	public static final int NUM_BROKERS_START = 1;
-	public static final String EXAMPLE_TOPIC = "topic-1";
+	public static final String EXAMPLE_TOPIC = "topic-messages";
 	public static final String TEST_MESSAGE_VALUE = "Test Message!";
 
 	@ClassRule // spring-kafka-test
 	public static EmbeddedKafkaRule embeddedKafkaRule = new EmbeddedKafkaRule(NUM_BROKERS_START, true, EXAMPLE_TOPIC);
 
 	@Autowired
-	private BasicProducer basicProducer;
+	private MessageService messageService;
 
 	private KafkaMessageListenerContainer<String, String> container;
 
@@ -80,7 +75,7 @@ public class BasicProducerTest {
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void init() throws Exception {
 		setupKafkaConsumerTestEnvironment();
 	}
 
@@ -90,16 +85,13 @@ public class BasicProducerTest {
 	}
 
 	@Test
-	public void shouldProduce() throws InterruptedException {
-		basicProducer.send(TEST_MESSAGE_VALUE);
-
-		ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
-
-		// Hamcrest Matchers
-		assertThat(received, hasValue(TEST_MESSAGE_VALUE));
-
-		// AssertJ Condition to check the key
-		assertThat(received).has(key(null));
+	public void shouldProduceMessage() throws InterruptedException {
+		String result = messageService.send(TEST_MESSAGE_VALUE);
+		
+	    ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
+	    
+	    assertTrue(result.contains(TEST_MESSAGE_VALUE));
+	    assertTrue(received.value().contains(TEST_MESSAGE_VALUE));
 	}
 
 }

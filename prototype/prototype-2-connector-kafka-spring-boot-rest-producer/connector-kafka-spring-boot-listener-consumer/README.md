@@ -1,13 +1,15 @@
-# demo-kafka-spring-boot-basic-with-config
+# connector-kafka-spring-boot-listener-consumer
 
-This project represents a basic example of working with **Kafka** and configuration classes
+This project represents a **connector library (dependency)** related with consuming Kafka messages
 
-Send and receive "Hello World! "+new Date() message
+It has 2 focuses
 
-This projects stands out for:
+* Consuming messages as string
+* Consuming a string message in an event wrapper
 
-* Provide **projets class** : receiver and sender
-* Provide **basic configuration classes** : receiver and sender
+Esta librería destaca por :
+
+* Provides **listener classes**
 
 
 
@@ -17,9 +19,10 @@ This projects stands out for:
 
 * Java 8
 * [Maven 3](https://maven.apache.org/) - Dependency Management
-* [Apache Kafka ](https://kafka.apache.org/)
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Spring](https://spring.io)
+* [Docker](https://www.docker.com/) - Container Technology
+* [Apache Kafka ](https://kafka.apache.org/) 
 
 Dependencies with architecture projects
 
@@ -79,9 +82,7 @@ The result will be the generation of an artifact in your Maven repository (local
 
 ## Testing
 
-This project has tests : Unit + Integration
-
-Execute with IDE or Maven
+N/A
 
 
 
@@ -142,7 +143,7 @@ mvn package -P<id_profile>
 Execute
 
 ```bash
-java -jar target/demo-kafka-spring-boot-basic-with-config-0.0.1-SNAPSHOT.jar
+java -jar target/connector-kafka-spring-boot-listener-consumer-0.0.1-SNAPSHOT.jar
 ```
 
 Use default environment -> dev or <id_profile> environment
@@ -155,6 +156,7 @@ Use default environment -> dev or <id_profile> environment
 
 Custom Library
 
+
 ## Apache Kafka Configuration
 
 * Installation and Configuration : Apache Kafka (Document **doc/README-installation-configuration-kafka**)
@@ -164,19 +166,17 @@ Custom Library
 * Create topics (Defined in spring configuration file) :
 
 ```bash
-kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-1
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-messages
 
-kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-2
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-events
 ```
-
-
-
 
 
 ## Versioning
 
 **Note :** [SemVer](http://semver.org/) is used for the versioning.
 To see the available versions access the repository tags
+
 
 
 

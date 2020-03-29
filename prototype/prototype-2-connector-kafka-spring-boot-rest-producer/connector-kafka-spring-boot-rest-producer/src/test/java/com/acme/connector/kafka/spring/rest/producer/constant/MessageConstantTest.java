@@ -1,0 +1,18 @@
+package com.acme.connector.kafka.spring.rest.producer.constant;
+
+import java.lang.reflect.InvocationTargetException;
+
+import org.junit.Test;
+
+import com.acme.architecture.testing.util.JUnitTestUtil;
+import com.acme.connector.kafka.spring.rest.producer.constant.MessageConstant;
+
+public class MessageConstantTest {
+
+	@Test
+	public void whenCheckConstantClassWellDefined() throws NoSuchMethodException, InvocationTargetException,
+			InstantiationException, IllegalAccessException {
+		JUnitTestUtil.checkConstantClassWellDefined(MessageConstant.class);
+	}
+
+}

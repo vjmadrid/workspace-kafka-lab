@@ -25,7 +25,6 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.acme.architecture.event.driven.entity.GenericEvent;
 import com.acme.kafka.consumer.BasicEventConsumer;
 
 @RunWith(SpringRunner.class)
@@ -49,8 +48,6 @@ public class BasicEventConsumerTest {
 
 	@Autowired
 	private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-	
-	private GenericEvent eventTest;
 
 	private void setupKafkaProducerTestEnvironment() throws Exception {
 		Map<String, Object> senderProperties = KafkaTestUtils.producerProps(embeddedKafkaRule.getEmbeddedKafka());

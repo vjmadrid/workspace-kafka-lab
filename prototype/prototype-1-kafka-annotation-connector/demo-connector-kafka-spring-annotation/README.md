@@ -1,13 +1,12 @@
-# demo-kafka-spring-boot-basic-with-config
+# demo-kafka-annotation-connector
 
-This project represents a basic example of working with **Kafka** and configuration classes
+This project represents a basic example of working with **Kafka** and the **Custon Annotation Connector**
 
-Send and receive "Hello World! "+new Date() message
 
 This projects stands out for:
 
-* Provide **projets class** : receiver and sender
 * Provide **basic configuration classes** : receiver and sender
+* Provide **processor class** using annotations
 
 
 
@@ -23,7 +22,7 @@ This projects stands out for:
 
 Dependencies with architecture projects
 
-N/A
+* **connector-kafka-spring-annotation** [0.0.1-SNAPSHOT] : Custom Kafka Connector Annotations
 
 Third Party Dependencies
 
@@ -142,7 +141,7 @@ mvn package -P<id_profile>
 Execute
 
 ```bash
-java -jar target/demo-kafka-spring-boot-basic-with-config-0.0.1-SNAPSHOT.jar
+java -jar target/demo-connector-kafka-spring-annotation-0.0.1-SNAPSHOT.jar
 ```
 
 Use default environment -> dev or <id_profile> environment

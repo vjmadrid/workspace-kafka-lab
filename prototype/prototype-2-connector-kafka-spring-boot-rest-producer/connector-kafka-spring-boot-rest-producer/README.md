@@ -1,13 +1,18 @@
-# demo-kafka-spring-boot-basic-with-config
+# connector-kafka-spring-boot-rest-producer
 
-This project represents a basic example of working with **Kafka** and configuration classes
+This project represents a **connector library (dependency)** related with converting a **REST** Post request to a **Kafka** message
 
-Send and receive "Hello World! "+new Date() message
+It has 2 focuses
 
-This projects stands out for:
+* Sending messages as string
+* Sending a string message in an event wrapper
 
-* Provide **projets class** : receiver and sender
-* Provide **basic configuration classes** : receiver and sender
+This library stands out for:
+
+* Provides **constants classes**
+* Provides **basic classes** : Controller, Service, ...
+* Provides **converter REST controller** to Kafka message
+* Provides **converter REST controller** to event in a Kafka message -> EDA
 
 
 
@@ -17,21 +22,29 @@ This projects stands out for:
 
 * Java 8
 * [Maven 3](https://maven.apache.org/) - Dependency Management
-* [Apache Kafka ](https://kafka.apache.org/)
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Spring](https://spring.io)
+* [Docker](https://www.docker.com/) - Container Technology
+* [Apache Kafka ](https://kafka.apache.org/) 
 
 Dependencies with architecture projects
 
-N/A
+* **architecture-testing** [0.0.1-SNAPSHOT] : Architecture library for testing used in the test environment
+* **architecture-event-driven** [0.0.1-SNAPSHOT] : Architecture library for event-driven
 
-Third Party Dependencies
+Dependencies with architecture projects
 
 * **spring-boot-starter-parent** [2.2.0.RELEASE] : Spring Boot + Spring Framework
 * **spring-boot-starter** [X] : Spring Boot Basic core
 * **spring-boot-starter-test** [X] : Spring Boot testing library
+* **spring-boot-starter-web** [X] : Spring Boot web library
+* **spring-boot-devtools** [X] : Spring Boot Dev tools Library
+* **spring-boot-starter-actuator** [X] : Spring Boot Actuators Library
 * **spring-kafka** [X] : Spring - Kafka Integration
 * **spring-kafka-test** [X] : Kafka testing library with Spring Framework
+
+* **springfox-swagger2** [2.9.2] : Swagger
+* **springfox-swagger-ui** [2.9.2] : Swagger UI
 
 Important :
 
@@ -142,7 +155,7 @@ mvn package -P<id_profile>
 Execute
 
 ```bash
-java -jar target/demo-kafka-spring-boot-basic-with-config-0.0.1-SNAPSHOT.jar
+java -jar target/connector-kafka-spring-boot-rest-producer-0.0.1-SNAPSHOT.jar
 ```
 
 Use default environment -> dev or <id_profile> environment
@@ -155,6 +168,7 @@ Use default environment -> dev or <id_profile> environment
 
 Custom Library
 
+
 ## Apache Kafka Configuration
 
 * Installation and Configuration : Apache Kafka (Document **doc/README-installation-configuration-kafka**)
@@ -164,9 +178,61 @@ Custom Library
 * Create topics (Defined in spring configuration file) :
 
 ```bash
-kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-1
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-messages
 
-kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-2
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topic-events
+```
+
+
+### Use Browser
+
+
+**POST http://localhost:8081/kafka-connector/api/message**
+
+Require BODY with message (String)
+
+
+**POST http://localhost:8081/kafka-connector/api/event**
+
+Require BODY with message (String)
+
+Generate Response with :
+
+```bash
+{  
+   "id":"d24472ca-ddde-46fc-85ac-dac1d7e479aa",
+   "parentId":"",
+   "name":"Send Message",
+   "type":"CREATE",
+   "author":"",
+   "expirationSeconds":0,
+   "payload":"Esto es una prueba",
+   "createdDate":1551791424933,
+   "updatedDate":null,
+   "deletedDate":null
+}
+```
+
+
+
+
+
+## Swagger
+
+The service will accept HTTP GET requests at :
+
+```bash
+http://localhost:8081/kafka-connector/v2/api-docs
+```
+
+And return JSON with meta inforamtion of the API
+
+
+Launching swagger UI swagger-ui.html
+
+
+```bash
+http://localhost:8081/kafka-connector/swagger-ui.html
 ```
 
 
@@ -177,6 +243,7 @@ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partit
 
 **Note :** [SemVer](http://semver.org/) is used for the versioning.
 To see the available versions access the repository tags
+
 
 
 

@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.acme.kafka</groupId>
-    <artifactId>demo-kafka-spring-boot-basic-with-config</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <name>demo-kafka-spring-boot-basic-with-config</name>
-	<description></description>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.acme.connector.kafka.spring.listener.consumer</groupId>
+    <artifactId>connector-kafka-spring-boot-listener-consumer</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <properties>
         <!-- *** Important : Include properties in ~/.m2/settings.xml -->
@@ -24,13 +22,13 @@
 		<!-- Compiler & Resources -->
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Spring Boot Properties -->
+		<start-class>com.acme.connector.kafka.spring.listener.consumer.Application</start-class>
 
-		<!-- Spring Boot Properties -->
-		<start-class>com.acme.kafka.SpringKafkaApplication</start-class>
+        <!-- Dependency Versions -->
 
-		<!-- Dependency Versions -->
-
-		<!-- Testing -->
+        <!-- Testing -->
 		<!-- * Default value -> use profile -->
 		<!-- 
 		<skip.unit.tests>false</skip.unit.tests>
@@ -48,6 +46,21 @@
 
         <!-- *** Architecture libraries *** -->
 
+		<!-- Modules -->
+
+		<dependency>
+			<groupId>com.acme.architecture.testing</groupId>
+			<artifactId>architecture-testing</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.acme.architecture.event.driven</groupId>
+			<artifactId>architecture-event-driven</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	
         <!-- *** Third Party Libraries *** -->
 
         <dependency>
@@ -75,7 +88,7 @@
     </dependencies>
 
     <build>
-        <finalName>demo-kafka-spring-boot-basic-with-config</finalName>
+        <finalName>connector-kafka-spring-boot-listener-consumer</finalName>
 
         <plugins>
 
@@ -85,7 +98,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-			<!-- maven-surefire-plugin : Plugin used to run unit tests - Generate reports in the directory target/surefire-reports -->
+            <!-- maven-surefire-plugin : Plugin used to run unit tests - Generate reports in the directory target/surefire-reports -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
@@ -156,7 +169,7 @@
 				</executions>
 			</plugin>
 
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
 </project>

@@ -1,10 +1,11 @@
 package com.acme.kafka.producer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThat;
-import static org.springframework.kafka.test.assertj.KafkaConditions.key;
-import static org.springframework.kafka.test.hamcrest.KafkaMatchers.hasValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -34,7 +35,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.acme.architecture.event.driven.entity.GenericEvent;
 import com.acme.architecture.event.driven.enumerate.GenericEventTypeEnum;
 import com.acme.architecture.event.driven.factory.GenericEventDataFactory;
-import com.acme.kafka.producer.BasicEventProducer;
+import com.acme.architecture.event.driven.util.converter.GenericEventConverter;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -96,16 +99,18 @@ public class BasicEventProducerTest {
 	}
 
 	@Test
-	public void shouldProduce() throws InterruptedException {
+	public void shouldProduce() throws InterruptedException, JsonParseException, JsonMappingException, IOException {
 		basicEventProducer.send(eventTest);
 		
 	    ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
 	    
-	    // Hamcrest Matchers
-	    assertThat(received, hasValue(TEST_MESSAGE_VALUE));
 	    
-	    // AssertJ Condition to check the key
-	   // assertThat(received).has(key(null));
+	    assertTrue(received.value().contains(TEST_MESSAGE_VALUE));
+	    
+	    GenericEvent resultGenericEvent = GenericEventConverter.fromJsonToGenericEvent(received.value());
+		
+		assertNotNull(resultGenericEvent);
+		assertEquals(TEST_MESSAGE_VALUE, resultGenericEvent.getPayload());
 	}
 
 }

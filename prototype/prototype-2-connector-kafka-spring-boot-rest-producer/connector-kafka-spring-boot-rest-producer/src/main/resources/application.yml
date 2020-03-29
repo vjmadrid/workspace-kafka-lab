@@ -1,0 +1,43 @@
+debug: false
+
+server:
+   servlet:
+      contextPath: /kafka-connector
+   port: 8081
+
+spring:
+   application:
+      name: connector-kafka-spring-boot-rest-producer
+   kafka:
+      bootstrap-servers: localhost:9092
+      producer:
+         key-serializer: org.apache.kafka.common.serialization.StringSerializer
+         value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+app:
+  topic:
+    messages: topic-messages
+    events: topic-events
+
+logging:
+  level:
+    root: WARN
+    org.springframework.web: INFO
+    com.acme: DEBUG
+
+
+---    
+spring:
+   profiles: dev
+
+server:
+   port: 8090
+
+
+---
+spring:
+   profiles: prod
+
+server:
+   port: 9090
+    
