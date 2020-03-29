@@ -17,12 +17,12 @@ public class BasicConsumer {
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    //Indicador que el mensaje es recibido en las test
+    //Use in testing for received a message
     public CountDownLatch getLatchTest() {
       return latch;
     }
     
-    // @KafkaListener : Crea un @KafkaListener
+    // Create @KafkaListener -> Depends application properties
     @KafkaListener(topics = "${app.topic.example1}")
     public void receive(@Payload String message, @Headers MessageHeaders headers) {
         LOG.info("[BasicConsumer] received message='{}'", message);

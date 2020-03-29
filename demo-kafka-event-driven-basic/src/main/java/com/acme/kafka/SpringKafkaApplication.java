@@ -11,13 +11,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.acme.architecture.event.driven.entity.GenericEvent;
 import com.acme.architecture.event.driven.enumerate.GenericEventTypeEnum;
 import com.acme.architecture.event.driven.factory.GenericEventDataFactory;
-import com.acme.kafka.sender.BasicEventSender;
+import com.acme.kafka.producer.BasicEventProducer;
 
 @SpringBootApplication
 public class SpringKafkaApplication implements CommandLineRunner {
+	
+	public static final String MESSAGE_VALUE = "Hello World! "+new Date();
 
     @Autowired
-    private BasicEventSender basicSender;
+    private BasicEventProducer basicEventProducer;
 	
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaApplication.class, args);
@@ -25,9 +27,8 @@ public class SpringKafkaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-    	String message = "Hello World! "+new Date().getTime();
-    	GenericEvent event = GenericEventDataFactory.create(UUID.randomUUID().toString(),"", "Send Message",GenericEventTypeEnum.CREATE.toString(), "", 0, message);
+    	GenericEvent event = GenericEventDataFactory.create(UUID.randomUUID().toString(),"", "Send Message",GenericEventTypeEnum.CREATE.toString(), "", 0, MESSAGE_VALUE);
 
-    	basicSender.send(event);
+    	basicEventProducer.send(event);
     }
 }

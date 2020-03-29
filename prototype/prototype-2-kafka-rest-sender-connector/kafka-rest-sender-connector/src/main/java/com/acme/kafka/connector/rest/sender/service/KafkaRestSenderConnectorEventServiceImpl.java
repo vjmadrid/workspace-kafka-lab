@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.acme.architecture.event.driven.converter.GenericEventConverter;
+import com.acme.architecture.common.util.converter.JsonConverter;
 import com.acme.architecture.event.driven.entity.GenericEvent;
 import com.acme.architecture.event.driven.enumerate.GenericEventTypeEnum;
 import com.acme.architecture.event.driven.factory.GenericEventDataFactory;
@@ -28,8 +28,9 @@ public class KafkaRestSenderConnectorEventServiceImpl implements KafkaRestSender
 	@Override
 	public String sendEvent(String message) {
 		GenericEvent event = GenericEventDataFactory.create(UUID.randomUUID().toString(),"", "Send Message",GenericEventTypeEnum.CREATE.toString(), "", 0, message);
-		String eventJSON = GenericEventConverter.INSTANCE.fromObjectToJSON(event, false);
+		String eventJSON = JsonConverter.convertObjectToJson(event, false);
 		LOG.info("[KafkaRestSenderService] sending event='{}' to topic='{}'", eventJSON, topicEvents);
+		
         kafkaTemplate.send(topicEvents, eventJSON);
 		return eventJSON;
 	}

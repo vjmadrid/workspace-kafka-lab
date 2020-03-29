@@ -16,8 +16,6 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<!-- *** Important : Aling with dae-architecture-core and other architecture 
-			libraries -->
 		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -30,10 +28,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Spring Boot Properties -->
-		<start-class>com.acme.kafka.XXXApplication</start-class>
+		<start-class>com.acme.kafka.SpringKafkaApplication</start-class>
 
 		<!-- Dependency Versions -->
-		<spring-kafka.version>2.4.4.RELEASE</spring-kafka.version>
+		
 
 		<!-- Testing -->
 		<!-- * Default value -> use profile -->
@@ -121,6 +119,7 @@
 							<outputDirectory>target/jacoco-reports</outputDirectory>
 						</configuration>
 					</execution>
+					<!--
 					<execution>
 						<id>coverage-check</id>
 						<goals>
@@ -141,6 +140,7 @@
 							</rules>
 						</configuration>
 					</execution>
+					-->
 				</executions>
 			</plugin>
 

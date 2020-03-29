@@ -11,9 +11,11 @@ import com.acme.kafka.producer.BasicProducer;
 
 @SpringBootApplication
 public class SpringKafkaApplication implements CommandLineRunner {
+	
+	public static final String MESSAGE_VALUE = "Hello World! "+new Date();
 
     @Autowired
-    private BasicProducer basicSender;
+    private BasicProducer basicProducer;
 	
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaApplication.class, args);
@@ -21,6 +23,6 @@ public class SpringKafkaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-    	//basicSender.send("Hello World! "+new Date());
+    	basicProducer.send(MESSAGE_VALUE);
     }
 }

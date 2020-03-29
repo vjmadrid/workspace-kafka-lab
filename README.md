@@ -1,4 +1,5 @@
 # workspace-kafka-lab
+
 This workspace is a repository that serves to **practices** with **Apache Kafka**
 
 
@@ -9,6 +10,9 @@ This workspace is a repository that serves to **practices** with **Apache Kafka*
 
 * Java 8
 * [Maven 3](https://maven.apache.org/) - Dependency Management
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Spring](https://spring.io)
+* [Docker](https://www.docker.com/) - Container Technology
 * [Apache Kafka ](https://kafka.apache.org/)
 
 
@@ -21,6 +25,8 @@ Define what elements are needed to install the software
 
 * Java 8 installed (1.5+ version required)
 * Maven installed  (3+)
+* Docker installed (19+)
+* Kafka infraestructure + Topics
 
 
 
@@ -70,4 +76,3 @@ To see the available versions access the repository tags
 ## Authors
 
 * **Víctor Madrid**
-

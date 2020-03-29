@@ -14,14 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.MessageListenerContainer;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.acme.kafka.constant.KafkaConfigConstant;
-import com.acme.kafka.receiver.BasicBatchReceiver;
-import com.acme.kafka.sender.BasicSender;
+import com.acme.kafka.consumer.BasicBatchConsumer;
+import com.acme.kafka.producer.BasicProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,31 +29,28 @@ import com.acme.kafka.sender.BasicSender;
 public class BasicBatchSenderReceiverTest {
 
 	public static final Logger LOG = LoggerFactory.getLogger(BasicBatchSenderReceiverTest.class);
-
-	public static final String EXAMPLE_TOPIC = "topic-example";
-
-	public static final int NUM_BROKERS = 1;
-
-	private String messageTest;
+	
+	public static final int NUM_BROKERS_START = 1;
+	public static final String EXAMPLE_TOPIC = "topic-1";
+	public static final String TEST_MESSAGE_VALUE = "Test Message!";
 
 	@Autowired
-	private BasicSender basicSender;
+	private BasicProducer basicProducer;
 
 	@Autowired
-	private BasicBatchReceiver basicBatchReceiver;
+	private BasicBatchConsumer basicBatchConsumer;
 
 	@Autowired
 	private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
-	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC);
+	@ClassRule //spring-kafka-test
+	public static EmbeddedKafkaRule embeddedKafkaRule = new EmbeddedKafkaRule(NUM_BROKERS_START, true, EXAMPLE_TOPIC);
 
 	@Before
 	public void init() throws Exception {
-		messageTest = "TEST";
 
 		for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry.getListenerContainers()) {
-			ContainerTestUtils.waitForAssignment(messageListenerContainer, embeddedKafka.getPartitionsPerTopic());
+			ContainerTestUtils.waitForAssignment(messageListenerContainer, embeddedKafkaRule.getEmbeddedKafka().getPartitionsPerTopic());
 		}
 		
 	}
@@ -62,12 +59,12 @@ public class BasicBatchSenderReceiverTest {
 	public void shouldSendMessage() throws InterruptedException {
 		
 		int numMessages = KafkaConfigConstant.RECEIVER_COUNTDOWNLATCH;
-	    for (int i = 0; i < numMessages; i++) {
-	    	basicSender.send(messageTest + " " + i);
+	    for (int i = 1; i <= numMessages; i++) {
+	    	basicProducer.send(TEST_MESSAGE_VALUE + " " + i);
 	    }
 
-	    basicBatchReceiver.getLatchTest().await(10000, TimeUnit.MILLISECONDS);
-		assertThat(basicBatchReceiver.getLatchTest().getCount()).isEqualTo(0);
+	    basicBatchConsumer.getLatchTest().await(10000, TimeUnit.MILLISECONDS);
+		assertThat(basicBatchConsumer.getLatchTest().getCount()).isEqualTo(0);
 	}
 
 }

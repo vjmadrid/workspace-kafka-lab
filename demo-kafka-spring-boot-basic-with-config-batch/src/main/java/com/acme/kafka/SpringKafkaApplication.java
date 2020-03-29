@@ -7,15 +7,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.acme.kafka.sender.BasicSender;
+import com.acme.kafka.producer.BasicProducer;
 
 @SpringBootApplication
 public class SpringKafkaApplication implements CommandLineRunner {
 
 	public static final int NUM_SENDS = 8;
+	public static final String MESSAGE_VALUE = "Hello World! "+new Date();
 	
     @Autowired
-    private BasicSender basicSender;
+    private BasicProducer basicSender;
 	
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaApplication.class, args);
@@ -23,8 +24,10 @@ public class SpringKafkaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-    	for(int i = 0; i<NUM_SENDS; i++) {
-    		basicSender.send("["+i+"] Hello World! "+new Date());
+    	
+    	for(int i = 1; i<=NUM_SENDS; i++) {
+    		basicSender.send("["+i+"] "+ MESSAGE_VALUE);
     	}
+    	
     }
 }

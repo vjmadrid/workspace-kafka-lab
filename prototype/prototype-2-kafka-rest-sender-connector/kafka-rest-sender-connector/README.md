@@ -8,35 +8,49 @@ Este conector destaca por :
 * Proporciona la funcionalidad de envio de mensajes ad-hoc en el cuerpo de la petición POST 
 * Proporciona la funcionalidad de envio de mensajes dentro de un evento -> Arquitectura EDA
 
-## Stack Tecnológico
+
+
+
+
+
+
+## Technological Stack
 
 * Java 8
-* [Maven 3](https://maven.apache.org/) - Gestión de dependencias
-* [Apache Kafka ](https://kafka.apache.org/) 2.11-1.1.1
-* Spring Boot
- 
+* [Maven 3](https://maven.apache.org/) - Dependency Management
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Spring](https://spring.io)
+* [Docker](https://www.docker.com/) - Container Technology
+* [Apache Kafka ](https://kafka.apache.org/) 
 
-Dependencias con proyectos de arquitectura
+Dependencies with architecture projects
 
 * **architecture-testing** [1.0.0-SNAPSHOT] : Librería de arquitectura para testing utilizada en el ámbito de test
 * **architecture-event-driven** [1.0.0-SNAPSHOT] : Librería de arquitectura para proporcionar los elementos relacionados con la gestión de eventos
 
-Dependencias terceros
+Third Party Dependencies
 
-* **spring-boot-starter** [2.0.0.RELEASE] : Framework Spring Boot
-* **spring-kafka** [2.1.4.RELEASE] : Librería de integración Spring y Kafka
-* **spring-boot-starter-test** [2.0.0.RELEASE] : Librería de testing para Spring Boot
-* **spring-kafka-test** [2.0.0.RELEASE] : Librería de testing para Spring Boot
+* **spring-boot-starter-parent** [2.2.0.RELEASE] : Spring Boot + Spring Framework
+* **spring-boot-starter** [X] : Spring Boot Basic core
+* **spring-boot-starter-test** [X] : Spring Boot testing library
+* **spring-boot-starter-web** [X] : Spring Boot web library
+* **spring-boot-devtools** [X] : Spring Boot Dev tools Library
+* **spring-boot-starter-actuator** [X] : Spring Boot Actuators Library
+
+* **springfox-swagger2** [2.9.2] : Swagger
+* **springfox-swagger-ui** [2.9.2] : Swagger UI
 
 
-## Prerrequisitos
 
-Se definen que elementos se necesitan para instalar el software
 
-* Tener instalado Java 8 (Se requiere versión 1.5+)
-* Tener instalado Maven (Se aconseja que sea 3+)
-* Tener instalado / configurado Apache Kafka
-* Creación de los topicos necesarios
+
+## Prerequisites
+
+Define what elements are needed to install the software
+
+* Java 8 installed (1.5+ version required)
+* Maven installed  (3+)
+* Docker installed (19+)
 
 
 ### Configuración Apache Kafka
@@ -131,11 +145,15 @@ java -jar kafka-rest-sender-connector-1.0.0-SNAPSHOT.jar --spring.profile.active
 
 
 
-## Versionado
+## Versioning
 
-**Nota :** Se utiliza [SemVer](http://semver.org/) para el versionado. 
-Para ver las versiones disponibles acceder a los tags del repositorio
+**Note :** [SemVer](http://semver.org/) is used for the versioning.
+To see the available versions access the repository tags
 
-## Autores
+
+
+
+
+## Authors
 
 * **Víctor Madrid**

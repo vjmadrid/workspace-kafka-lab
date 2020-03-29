@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.MessageListenerContainer;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,8 +23,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.acme.architecture.event.driven.entity.GenericEvent;
 import com.acme.architecture.event.driven.enumerate.GenericEventTypeEnum;
 import com.acme.architecture.event.driven.factory.GenericEventDataFactory;
-import com.acme.kafka.receiver.BasicEventReceiver;
-import com.acme.kafka.sender.BasicEventSender;
+import com.acme.kafka.consumer.BasicEventConsumer;
+import com.acme.kafka.producer.BasicEventProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,35 +35,32 @@ public class BasicEventSenderReceiverTest {
 
 	public static final Logger LOG = LoggerFactory.getLogger(BasicEventSenderReceiverTest.class);
 
-	public static final String EXAMPLE_TOPIC = "topic-example";
+	public static final int NUM_BROKERS_START = 1;
+	public static final String EXAMPLE_TOPIC = "topic-1";
+	public static final String TEST_MESSAGE_VALUE = "Test Message!";
 
-	public static final int NUM_BROKERS = 1;
-	
-	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(NUM_BROKERS, true, EXAMPLE_TOPIC);
+	@ClassRule //spring-kafka-test
+	public static EmbeddedKafkaRule embeddedKafkaRule = new EmbeddedKafkaRule(NUM_BROKERS_START, true, EXAMPLE_TOPIC);
 	
 	@Autowired
 	private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
 	@Autowired
-	private BasicEventSender basicEventSender;
+	private BasicEventProducer basicEventSender;
 
 	@Autowired
-	private BasicEventReceiver basicEventReceiver;
+	private BasicEventConsumer basicEventReceiver;
 	
-	private String messageTest;
-
 	private GenericEvent eventTest;
 
 	@Before
 	public void init() throws Exception {
-		messageTest = "TEST";
 		eventTest = GenericEventDataFactory.create(UUID.randomUUID().toString(), "", "Send Message",
-				GenericEventTypeEnum.CREATE.toString(), "", 0, messageTest);
+				GenericEventTypeEnum.CREATE.toString(), "", 0, TEST_MESSAGE_VALUE);
 
 		for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
 				.getListenerContainers()) {
-			ContainerTestUtils.waitForAssignment(messageListenerContainer, embeddedKafka.getPartitionsPerTopic());
+			ContainerTestUtils.waitForAssignment(messageListenerContainer, embeddedKafkaRule.getEmbeddedKafka().getPartitionsPerTopic());
 		}
 	}
 

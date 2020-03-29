@@ -3,6 +3,7 @@ package com.acme.kafka.connector.rest.sender.exception;
 import com.acme.architecture.common.constant.GlobalConstant;
 import com.acme.architecture.common.exception.AcmeException;
 
+
 public class KafkaRestSenderException extends AcmeException {
 
 	private static final long serialVersionUID = -5333357611767101717L;
