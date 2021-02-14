@@ -33,7 +33,7 @@
 		<!-- Dependency Versions -->
 		<spring-kafka.version>2.4.4.RELEASE</spring-kafka.version>
 
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
 
         <!-- Testing -->
 		<!-- * Default value -> use profile -->
